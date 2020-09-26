@@ -1,0 +1,166 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/3358ecea42.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase.js"></script>
+
+    <title>Chat App</title>
+</head>
+
+<body>
+    <span class="top"></span>
+
+    <div class="container-fluid bg-white chatbox shadow-lg rounded">
+        <div class="row">
+            <div class="col-md-4 pr-0 d-none d-md-block" id="side-1">
+                <div class="card">
+                    <div class="card-header leftHeader">
+                        <div class="row">
+                            <div class="col-10 col-sm-10 col-md-10">
+                                <img id="imgProfile" src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="rounded-circle profile-pic">
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 ">
+                                <i class="fas fa-arrow-left d-md-none" style="line-height: 45px; cursor: pointer; font-size: 20px;" onclick="hideList()"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item input" style="background-color: #f8f8f8;">
+                            <input type="text" placeholder="Search or new contact" class=" form-control form-rounded">
+                        </li>
+                        <li class="list-group-item list-group-item-action list" onclick="startChat()">
+                            <div class="row">
+                                <div class="col-2 col-sm-2 col-md-2 friendImage">
+                                    <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="friend-pic">
+                                </div>
+                                <div class="col-10 col-sm-10 col-md-10">
+                                    <div class="name">Any Name</div>
+                                    <div class="under-name">This is some massege text...</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item list-group-item-action list" onclick="startChat()">
+                            <div class="row">
+                                <div class="col-2 col-sm-2 col-md-2 friendImage">
+                                    <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="friend-pic">
+                                </div>
+                                <div class="col-10 col-sm-10 col-md-10">
+                                    <div class="name">Any Name</div>
+                                    <div class="under-name">This is some massege text...</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item list-group-item-action list" onclick="startChat()">
+                            <div class="row">
+                                <div class="col-2 col-sm-2 col-md-2 friendImage">
+                                    <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="friend-pic">
+                                </div>
+                                <div class="col-10 col-sm-10 col-md-10">
+                                    <div class="name">Any Name</div>
+                                    <div class="under-name">This is some massege text...</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-md-8 pl-0 pr-0" id="side-2">
+                <div id="chatPanel" class="card h-100" style="display: none;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                                <i class="fas fa-list showingListIcon" style="cursor: pointer;" onclick="showList()"></i>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="friend-pic">
+                            </div>
+                            <div class="col-5 col-sm-5 col-md-5 col-lg-7">
+                                <div class="name">Any Name</div>
+                                <div class="under-name">Last seen 9/8/2020</div>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-3 search">
+                                <i class="fas fa-search icon"></i>
+                                <i class="fas fa-paperclip ml-4 icon"></i>
+                                <i class="fas fa-ellipsis-v ml-4 icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" id="massages">
+                        <div class="row friendChat">
+                            <div class="col-2 col-sm-1 col-md-1">
+                                <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="chat-pic">
+                            </div>
+                            <div class="col-6 col-sm-7 col-md-7">
+                                <p class="receive">
+                                    This is some text ... Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus culpa debitis itaque ipsa assumenda? Eveniet eum quam quae unde libero quaerat, earum voluptate iure ad possimus neque, enim fugit ducimus!
+                                    <span class="time">7:21 pm</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row myChat justify-content-end ">
+
+                            <div class="col-6 col-sm-7 col-md-7">
+                                <p class="send float-right">
+                                    This is some text ... Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium, reprehenderit non cumque minus iure qui aut quibusdam harum. Dignissimos dicta ipsa odio obcaecati, reprehenderit laboriosam tempora corrupti veritatis nulla
+                                    at?
+                                    <span class="time ">7:22 pm</span>
+                                </p>
+                            </div>
+                            <div class="col-2 col-sm-1 col-md-1">
+                                <img src="https://maeruamall.com/wp-content/uploads/2015/04/person-placeholder-4.png" class="chat-pic">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-2 col-sm-2 col-md-1">
+                                <i class="far fa-grin fa-2x smili"></i>
+                            </div>
+                            <div class="col-8 col-sm-8 col-md-10 ">
+                                <input id="txtMassage" onclick="onKeyDown()" type="text" placeholder="Type a massage" class="form-control form-rounded massageInput">
+                            </div>
+                            <div class=" col-2 col-sm-2 col-md-1 microphone">
+                                <i class="fas fa-microphone fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="startChat" class="text-center">
+                    <i class="fas fa-comments mt-5 homeLogo" style="font-size: 250px;"></i>
+                    <h2 class="landingPage">Select your friend to the list and start Chat...</h2>
+                    <button id="chatListBtn" onclick="showList()" class=" btn btn-primary d-md-none">Chat List</button>
+                    <button id="signInBtn" onclick="signIn()" class="btn btn-primary">Sign In</button>
+                    <button id="signInBtn" onclick="signOut()" class="btn btn-primary">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyDGJqoQq8jtKldeg7IXEs-Bud-lo41mv3A",
+            authDomain: "chat-app-2bb1c.firebaseapp.com",
+            databaseURL: "https://chat-app-2bb1c.firebaseio.com",
+            projectId: "chat-app-2bb1c",
+            storageBucket: "chat-app-2bb1c.appspot.com",
+            messagingSenderId: "54219763795",
+            appId: "1:54219763795:web:ffedeaacf7119886fbd6a6",
+            measurementId: "G-EFJ5NXKH5G"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js " integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js " integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV " crossorigin="anonymous "></script>
+    <script src="app.js "></script>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+
+</html>
